@@ -17,6 +17,7 @@ from vanna.core.user import User
 from vanna.core.user.resolver import UserResolver
 from vanna.core.user.request_context import RequestContext
 from vanna.integrations.google.gemini import GeminiLlmService
+from vanna.integrations.ollama.llm import OllamaLlmService
 from vanna.integrations.chromadb.agent_memory import ChromaAgentMemory
 from vanna.integrations.postgres.sql_runner import PostgresRunner
 from vanna.integrations.bigquery.sql_runner import BigQueryRunner
@@ -45,10 +46,17 @@ def create_app() -> FastAPI:
     app = FastAPI(title="Vanna Text-to-SQL")
 
     # LLM
-    llm = GeminiLlmService(
-        model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
-        api_key=os.getenv("GOOGLE_API_KEY"),
-    )
+    provider = os.getenv("LLM_PROVIDER", "gemini").lower()
+    if provider == "ollama":
+        llm = OllamaLlmService(
+            model=os.getenv("OLLAMA_MODEL", "llama3.1:8b"),
+            host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+        )
+    else:
+        llm = GeminiLlmService(
+            model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+            api_key=os.getenv("GOOGLE_API_KEY"),
+        )
 
     # Agent memory (ChromaDB)
     memory = ChromaAgentMemory(

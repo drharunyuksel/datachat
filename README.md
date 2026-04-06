@@ -26,7 +26,7 @@ uv venv .venv --python 3.12
 source .venv/bin/activate
 
 # Install
-uv pip install -e ".[gemini,postgres,chromadb,fastapi]" python-dotenv
+uv pip install -e ".[gemini,ollama,postgres,chromadb,fastapi]" python-dotenv
 
 # Configure
 cp .env.example .env
@@ -50,13 +50,23 @@ Copy `.env.example` to `.env` and fill in:
 
 | Variable | Description |
 |----------|-------------|
+| `LLM_PROVIDER` | `gemini` (cloud) or `ollama` (local). Default: `gemini` |
 | `GOOGLE_API_KEY` | Gemini API key from Google AI Studio |
-| `GEMINI_MODEL` | Model name (default: `gemini-2.5-flash`) |
+| `GEMINI_MODEL` | Gemini model name (default: `gemini-2.5-flash`) |
+| `OLLAMA_MODEL` | Ollama model name (e.g. `mistral-small3.1:latest`) |
+| `OLLAMA_HOST` | Ollama server URL (default: `http://localhost:11434`) |
 | `POSTGRES_HOST` | PostgreSQL host |
 | `POSTGRES_PORT` | PostgreSQL port (default: 5432) |
 | `POSTGRES_DATABASE` | Database name |
 | `POSTGRES_USER` | Database user |
 | `POSTGRES_PASSWORD` | Database password |
+
+### Tested LLMs
+
+| Provider | Model | Notes |
+|----------|-------|-------|
+| Gemini | `gemini-2.5-flash` | Fast, strong tool calling. Requires API key. |
+| Ollama | `mistral-small3.1:latest` | Good tool calling support. Runs fully local, ~16GB RAM. |
 
 ## Scripts
 
