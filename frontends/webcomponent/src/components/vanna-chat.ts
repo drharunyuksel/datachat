@@ -30,20 +30,10 @@ export class VannaChat extends LitElement {
         --chat-surface: var(--vanna-background-root);
         --chat-muted: var(--vanna-background-default);
         --chat-muted-stronger: var(--vanna-background-higher);
-        max-width: 1024px;
-        margin: 0 auto;
         background: var(--vanna-background-root);
-        border: 1px solid var(--vanna-outline-dimmer);
-        border-radius: var(--vanna-border-radius-2xl);
-        box-shadow: var(--vanna-shadow-xl);
         overflow: hidden;
-        transition: box-shadow var(--vanna-duration-300) ease, transform var(--vanna-duration-300) ease;
         position: relative;
-      }
-
-      :host(:hover) {
-        box-shadow: var(--vanna-shadow-2xl);
-        transform: translateY(-2px);
+        height: 100%;
       }
 
       :host([theme="dark"]) {
@@ -130,8 +120,7 @@ export class VannaChat extends LitElement {
       .chat-layout {
         display: grid;
         grid-template-columns: minmax(0, 1fr) 300px;
-        height: 600px;
-        max-height: 80vh;
+        height: 100%;
         background: var(--chat-muted);
       }
 
@@ -897,7 +886,7 @@ export class VannaChat extends LitElement {
   @property() title = 'Vanna AI Chat';
   @property() placeholder = 'Ask me anything...';
   @property({ type: Boolean }) disabled = false;
-  @property({ type: Boolean }) showProgress = true;
+  @property({ type: Boolean }) showProgress = false;
   @property({ type: Boolean }) allowMinimize = true;
   @property({ reflect: true }) theme = 'light';
   @property({ attribute: 'api-base' }) apiBaseUrl = '';
@@ -911,7 +900,8 @@ export class VannaChat extends LitElement {
   @state() private status: 'idle' | 'working' | 'error' | 'success' = 'idle';
   @state() private statusMessage = '';
   @state() private statusDetail = '';
-  @state() private schemaSidebarOpen = false;
+  @state() private schemaSidebarOpen = true;
+  @state() private conversationStarted = false;
   @state() private schemaData: any[] = [];
   @state() private schemaLoading = false;
   @state() private schemaFilter = '';
@@ -1039,6 +1029,9 @@ export class VannaChat extends LitElement {
 
     // Request starter UI from backend
     this.requestStarterUI();
+
+    // Fetch schema data immediately so the sidebar is populated on load
+    this.fetchSchema();
   }
 
   /**
@@ -1120,6 +1113,9 @@ export class VannaChat extends LitElement {
 
   private async _sendMessageInternal(messageText: string): Promise<boolean> {
     console.log('_sendMessageInternal called with:', messageText);
+
+    // Show progress sidebar once conversation begins
+    this.conversationStarted = true;
 
     // Auto-maximize window when user sends a message (if not already maximized or minimized)
     if (this.windowState !== 'maximized' && this.windowState !== 'minimized') {
@@ -1627,7 +1623,7 @@ export class VannaChat extends LitElement {
       ` : ''}
 
       <!-- Main chat interface -->
-      <div class="chat-layout ${this.showProgress ? '' : 'compact'} ${this.schemaSidebarOpen ? 'has-schema-sidebar' : ''}">
+      <div class="chat-layout ${this.showProgress && this.conversationStarted ? '' : 'compact'} ${this.schemaSidebarOpen ? 'has-schema-sidebar' : ''}">
         ${this.schemaSidebarOpen ? this.renderSchemaSidebar() : ''}
         <div class="chat-main">
           <div class="chat-header">
@@ -1731,7 +1727,7 @@ export class VannaChat extends LitElement {
           </div>
         </div>
 
-        ${this.showProgress ? html`
+        ${this.showProgress && this.conversationStarted ? html`
           <div class="sidebar">
             <vanna-progress-tracker theme=${this.theme}></vanna-progress-tracker>
           </div>
