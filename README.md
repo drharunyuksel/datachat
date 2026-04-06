@@ -10,6 +10,12 @@ Built on [Vanna 2.0](https://github.com/vanna-ai/vanna) (MIT license, archived M
 - PostgreSQL system prompt for correct SQL dialect
 - Combined train + start script
 
+## Prerequisites
+
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
+- [Node.js](https://nodejs.org/) (for building the web component frontend on first run)
+
 ## Setup
 
 ```bash
