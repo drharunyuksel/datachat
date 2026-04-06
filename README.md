@@ -2,6 +2,8 @@
 
 Self-hosted text-to-SQL chat interface. Ask questions in natural language, get SQL queries, results, and charts.
 
+![DataChat](datachat-screenshot.png)
+
 Built on [Vanna 2.0](https://github.com/vanna-ai/vanna) (MIT license, archived March 2026). This fork adds:
 
 - Serialization fix for wide tables with complex data types (#1054)
