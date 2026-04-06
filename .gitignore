@@ -1,0 +1,30 @@
+# Credentials
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# ChromaDB data
+chroma_data/
+
+# Query result files
+query_results_*.csv
+
+# Node
+frontends/webcomponent/node_modules/
+frontends/webcomponent/dist/
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.claude/
