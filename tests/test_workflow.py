@@ -655,7 +655,7 @@ class TestStarterUI:
         assert len(components) == 1
         rich_text = components[0].rich_component
         assert rich_text.type == ComponentType.TEXT
-        assert "Welcome to Vanna AI" in rich_text.content
+        assert "Welcome to DataChat" in rich_text.content
         # User view should be simple and not mention memory management
         assert "Memory Management" not in rich_text.content
         assert "Admin" not in rich_text.content

@@ -883,7 +883,7 @@ export class VannaChat extends LitElement {
     `
   ];
 
-  @property() title = 'Vanna AI Chat';
+  @property() title = 'DataChat';
   @property() placeholder = 'Ask me anything...';
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) showProgress = false;

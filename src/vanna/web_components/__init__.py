@@ -29,10 +29,10 @@ def get_component_html() -> str:
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vanna AI Chat</title>
+    <title>DataChat</title>
 </head>
 <body>
-    <vanna-chat title="Vanna AI Assistant"></vanna-chat>
+    <vanna-chat title="DataChat"></vanna-chat>
     <script type="module" src="{js_file}"></script>
 </body>
 </html>
