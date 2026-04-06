@@ -209,9 +209,13 @@ async def train(postgres_only: bool = False, bigquery_only: bool = False, fresh:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Vanna with database schemas")
+    parser.add_argument("--database", help="PostgreSQL database name (overrides POSTGRES_DATABASE from .env)")
     parser.add_argument("--postgres-only", action="store_true", help="Load only PostgreSQL schemas")
     parser.add_argument("--bigquery-only", action="store_true", help="Load only BigQuery schemas")
     parser.add_argument("--fresh", action="store_true", help="Clear old data before loading")
     args = parser.parse_args()
+
+    if args.database:
+        os.environ["POSTGRES_DATABASE"] = args.database
 
     asyncio.run(train(postgres_only=args.postgres_only, bigquery_only=args.bigquery_only, fresh=args.fresh))
