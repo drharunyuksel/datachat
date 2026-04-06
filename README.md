@@ -8,6 +8,8 @@ Built on [Vanna 2.0](https://github.com/vanna-ai/vanna) (MIT license, archived M
 - Table/JSON toggle for query results
 - Database schema sidebar (table explorer)
 - PostgreSQL system prompt for correct SQL dialect
+- Auto-build frontend on first run
+- Multi-database support via `--database` flag
 - Combined train + start script
 
 ## Prerequisites
@@ -55,8 +57,25 @@ Copy `.env.example` to `.env` and fill in:
 | Script | Purpose |
 |--------|---------|
 | `python start.py` | Refresh schema + start server |
+| `python start.py --database mydb` | Override the database from `.env` |
+| `python start.py --list-databases` | List available PostgreSQL databases |
 | `python main.py` | Start server only (uses existing training data) |
 | `python train.py --fresh` | Re-train schema without starting server |
+| `python train.py --database mydb` | Train schema for a specific database |
+
+### Switching databases
+
+The default database is set via `POSTGRES_DATABASE` in `.env`. To connect to a different database without editing `.env`, use the `--database` flag:
+
+```bash
+# See which databases are available
+python start.py --list-databases
+
+# Start with a different database
+python start.py --database analytics
+```
+
+This overrides the database for both schema training and the running server.
 
 ## License
 
