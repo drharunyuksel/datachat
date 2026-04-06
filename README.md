@@ -34,6 +34,9 @@ cp .env.example .env
 
 # Start (trains on schema then launches server)
 python start.py
+
+# Start without retraining (uses existing training data)
+python main.py
 ```
 
 Open http://localhost:8084
