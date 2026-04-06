@@ -20,9 +20,6 @@ source .venv/bin/activate
 # Install
 uv pip install -e ".[gemini,postgres,chromadb,fastapi]" python-dotenv
 
-# Build web component
-cd frontends/webcomponent && npm install && npm run build && cd ../..
-
 # Configure
 cp .env.example .env
 # Edit .env with your API keys and database credentials
