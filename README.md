@@ -38,6 +38,12 @@ python start.py
 
 Open http://localhost:8084
 
+## Usage
+
+- Click a table in the schema sidebar to expand its columns
+- Double-click a table name to insert it into the chat input
+- Ask natural language questions — SQL is generated and executed automatically
+
 ## Configuration
 
 Copy `.env.example` to `.env` and fill in:
